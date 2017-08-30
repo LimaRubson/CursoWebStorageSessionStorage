@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+
+        <title></title>
+
+        <meta charset="UTF-8">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="css/style.css" rel="stylesheet">
+
+    </head>
+
+    <body>
+
+        <h1>
+            Duas opções: WebStorage e Web SQL Databases Web Storage: Como os Cookies, é fácil de ser usado, necessita
+            apenas de uma chave identificadora em um valor. Padrão até 5MB(Safari pede para aumentar se for o caso).Ela
+            possui 2 tipos de armazenamento: sessionStorage e localStorage.
+
+            sessionStorage: os dados armazenados nele ficarão disponíveis enquanto a janela não for fechada(enquanto sessão aberta).
+
+            localStorage: os dados armazenados nele ficarão disponíveis enquanto o dado não for explicitamente excluído
+            (se fechar e abrir o browser o mesmo continuará lá) Web SQL Databases: trabalha de forma semelhante a banco de dados.
+        </h1>
+
+        <section>
+            <h2>Breve resumo:</h2>
+            <p>
+                Quando comparamos aplicações web com as desktop, é fato que estas últimas possuem uma facilidade
+                bem maior para armazenar dados localmente quanto necessário. Geralmente são utilizados arquivos INI, XML ou até mesmo o 
+                próprio registro do sistema operacional, por exemplo.
+
+                Para suprir essa necessidade, foram criados os cookies, nos quais as aplicações web podem armazenar dados
+                localmente no browser do usuário. Porém, apesar de atender o fim  ao qual se  destinam, os cookies apresentam
+                alguns pontos negativos que, com o avanço das tecnologias web e da utilização de aplicações desse tipo, os tornaram inviáveis em muitas situações.
+
+                Com relação a esses pontos, podemos citar as seguintes características dessas estruturas:
+
+                -- Sempre que é feita uma requisição ao servidor, os cookies são inseridos nos cabeçalhos HTTP.
+                Com o tempo e dependendo das informações que são armazenadas, isso pode acarretar em prejuízo para a performance
+                da aplicação. Vale ressaltar ainda que na maioria das vezes, essas informações ficam trafegando sem que seu envio seja necessário.
+
+                -- Como os cookies são enviados nos cabelhos HTTP, as informações armazenadas trafegam de forma desprotegidas
+                pela internet.
+
+                -- Em geral, cada cookie suporta apenas 4KB de informações e alguns browsers permitem a gravação de 
+                apenas 20 cookies, ou seja, 80KB de dados. Em aplicações reais isso pode ser muito pouco.
+
+                --Usar cookies muitas vezes requisitava efetuar cálculos laboriosos com datas e horas para definir
+                tempo de validade, a fim de mantê-los armazenados apenas o tempo necessário.
+
+                O que precisava então era uma solução prática e eficiente para armazenar maores quantidades de dados no lado cliente, que
+                essas informações fossem mantidas mesmo após a atualização da página  e que não fossem enviadas ao servidor a menos que isso fosse
+                necessário.
+
+                Nesse contexto e buscando resolver essa solução, foi inserido na versão 5 do HTML o chamado "HTML 5 Web Storage" cuja
+                manipulação é simples e o funcionamento eficiente.
+
+                <strong>HTML 5 Web Storage:</strong>
+
+                O armazenamento de dados tornou-se bem mais prático e eficiente com o lançamento do HTML 5. Foram inseridos dois obetos
+                para controlar tal funcionalidade. O localStorage e o sessionStorage.
+
+                -- O funcionamento desses objetos é semelhante entre eles, com a diferença que o localStorage: <strong>armazena dados sem data de expiração</strong>,
+                enquanto o sessionStorage: <strong>armazena dados apenas seção atual</strong>. Fechando o browser, os dados do sessionStorage são automaticamente apagados,
+                já os do localStorage são mantidos por tempo indeterminado.
+
+                Tanto o laclStorage quanto o sessionStorage possuem os seguintes métodos:
+                 
+                  -- getItem(chave): recupera um item armazenado no storage através de sua chave.
+                  -- setItem(chave, valor): armazena um item no storage definindo seu identificador e seu valor. Se for informada uma chave já existente, o valor atual é substituído.
+                  -- removeItem(chave): remove o item armazenado buscando pela sua chave. Uma vez removido, o item não pode ser removido.
+                  -- clear(): limpa completamente o storage, removendo todos os itens definitivamente. 
+
+            </p>
+
+        </section>
+
+        <article>
+
+            <header>
+                <h1>Implementação WebStorage:</h1>
+            </header>
+            <!-- Nome do campo 'nome'-->                     <!-- Campo que recebe o nome -->
+            <label>SESSIONSTORAGE: Digite o nome da Pessoa.: <input type="text" id="nomePessoa"/></label><br/><br/>
+            <!-- Nome do campo 'endereço' -->                    <!-- Campo que recebe o endereço -->
+            <label>SESSIONSTORAGE: Digite o endereço da Pessoa.: <input type="text" id="enderecoPessoa"/></label><br/><br/>
+            <!-- Botão que grava as informações  -->
+            <input type="button" value="Gravar Session" id="gravaNomeSession" onClick="gravarDadosSession()"/>
+            <!-- Botão que ler as informações -->
+            <input type="button" value="Ler Session" id="lerNomeSession" onClick="lerDadosSession()"/>
+            <!-- Botão que remove as informações -->
+            <input type="button" value="Remover o nome da Session" id="removerNomeSession" onClick="removerDadosSession()"/>
+            <!-- Botão que remove todas as informações -->
+            <input type="button" value="Remover Tudo (all)" id="removerTudoNomeSession" onClick="removerTudoDadosSession()"/>
+            <!-- Botão que informa a quantidade de 'sessions' -->
+            <input type="button" value="Quantos pares Session" id="quantosSession" onClick="chamaQuantosSession()"/><br/><br/>
+
+            <!-- Nome do campo 'nome' -->                  <!-- Campo do nome -->
+            <label>LOCALSTORAGE: Digite o nome da Pessoa.: <input type="text" id="nomePessoa1"/></label><br/><br/>
+            <!-- Nome do endereço do  campo 'endereço' -->     <!-- Campo do endereço -->
+            <label>LOCALSTORAGE: Digite o endereço da Pessoa.: <input type="text" id="enderecoPessoa1"/></label><br/><br/>
+            <!-- Botão que grava as informações -->
+            <input type="button" value="Gravar no LocalStorage" id="gravaNomeLocal" onClick="gravarDadosLocal()"/>
+            <!-- Botão que ler as informações -->
+            <input type="button" value="Ler no LocalStorage" id="lerNomeLocal" onClick="lerDadosLocal()"/>
+            <!-- Botão que remove as informações -->
+            <input type="button" value="Remover o nome do LocalStorage" id="removerNomeLocal" onClick="removerDadosLocal()"/>
+            <!-- Botão que remove todas as informações -->
+            <input type="button" value="Remover Tudo (all)  do LocalStorage" id="removerTudoNomeLocal" onClick="removerTudoDadosLocal()"/>
+
+        </article>
+    
+    <script>
+        //Função insere valor no sessionStorage
+         function gravarDadosSession() {
+            //Armazena um item no storage definindo seu identificador  e seu valor. Se for informada uma chave já existente, o valor atual é substituído.
+            sessionStorage.setItem('nomePessoa',nomePessoa.value);
+            //Armazena um item no storage definindo seu identificador  e seu valor. Se for informada uma chave já existente, o valor atual é substituído.
+            sessionStorage.setItem('enderecoPessoa',enderecoPessoa.value);
+
+         }
+         //Função ler valor do sessionStorage
+         function lerDadosSession() {
+            //recupera um item armazenado no storage através da chave e exibe no console
+            console.log(sessionStorage.getItem('nomePessoa'));
+            //recupera os itens armazenado no storage através de sua chave e exibe no browser
+            alert('Nome.: '+sessionStorage.getItem('nomePessoa')+'- Endereço: '+sessionStorage.getItem('enderecoPessoa'));
+
+         }
+         //Função remove valor do sessionStorage
+         function removerDadosSession() {
+            //Remove o item armazenado buscando pela sua chave e exibe no console. Uma vez removido, o item não pode ser removido. 
+            console.log(sessionStorage.removeItem('nomePessoa',nomePessoa.value));
+            //Remove o item armazenado buscando pela sua chave e exibe na tela do browser. Uma vez removido, o item não pode ser removido.
+            alert(sessionStorage.removeItem('nomePessoa'));
+
+         }
+         //Função Remove todos os dados do sessionStorage
+         function removerTudoDadosSession() {
+                //Limpa completamente o storage, removendo todos os itens definitivamente
+                sessionStorage.clear();
+
+         }
+         //Função que exibe a quantidade de informações inseridas
+         function chamaQuantosSession() {
+                //Exibe na tela a quantidades de informações
+                alert('Quantos.: '+sessionStorage.length);
+         }
+         //Função insere valor no LocalStorage
+         function gravarDadosLocal() {
+            //Armazena um item armazendo no storage através de sua chave.
+            localStorage.setItem('nomePessoa1',nomePessoa.value);
+            //armazena um item no storage definindo seu identificador e seu valor. Se for informada uma chave já existente, o valor atual é substituído.
+            localStorage.setItem('enderecoPessoa1',enderecoPessoa.value);
+         }
+         //Função ler valor do LocalStorage 
+         function lerDadosLocal() {
+            //Recupera um item armazenado no storage através
+            console.log(localStorage.getItem('nomePessoa1'));
+            //Exibe na tela a informação inserida com localStorage
+            alert('Nome.: '+localStorage.getItem('nomePessoa1')+'- Endereço: '+localStorage.getItem('enderecoPessoa1'));
+
+         }
+         //Função remove valor do LocalStorage
+         function removerDadosLocal() {
+            //Exibe no console a informção removida com localStorage
+            console.log(localStorage.removeItem('nomePessoa1',nomePessoa.value));
+            //Exibe na tela a informação removida com localStorage
+            alert(localStorage.removeItem('nomePessoa1'));
+
+         }
+         //Remove todos os dados do LocalStorage
+         function removerTudoDadosLocal() {
+                //Limpa todas as informações inseridas com localStorage
+                localStorage.clear();
+
+         }
+
+    </script>
+
+    </body>
+
+</html>
